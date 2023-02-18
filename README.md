@@ -6,11 +6,29 @@
 
 <br/>
 
-#### Nesse momento a API retorna apenas resultados de artigos do estadão utilizando o endpoint **GET** ```/paynot?url=https://example.com.br```
+#### Nesse momento a API retorna apenas resultados de artigos de determinados portais de notícia utilizando o endpoint **GET** ```/paynot?url=https://example.com.br```
+
+### Os portais atualmente disponíveis pra consulta são:
+ - Estadão
+ - Folha de São Paulo
+ - CNN Brasil
+ - Correio Braziliense
+
+### Planejamento de disponibilização pra novos portais:
+ - [ ] R7
+ - [ ] Terra
+ - [ ] UOL
+ - [ ] G1
+ - [ ] Exame
+ - [ ] InfoMoney
+ - [ ] Metropoles
+ - [ ] New York Times
+ - [ ] BBC News
 
 #### O resultado retornado contém: 
  - Autor;
  - Imagem do artigo;
+ - Titul do artigo;
  - Texto do artigo completo.
 
 <br/>

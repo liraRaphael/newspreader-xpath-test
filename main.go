@@ -16,7 +16,7 @@ func main() {
 
 	app.Get("/paynot", func(c *fiber.Ctx) error {
 		if c.Query("url") != "" {
-			return c.JSON(collector.SetCollector(c.Query("url")))
+			return c.JSON(collector.GetArticleInfo(c.Query("url")))
 		}
 
 		return c.Status(400).JSON(models.Error{Message: "Campo 'url' é obrigatório para a consulta."})
