@@ -2,9 +2,11 @@ package models
 
 type NewsSource struct {
 	AuthorSelector string `json:"authorSelector"`
-	ImageLink      string `json:"imageLink"`
+	MediaLink      string `json:"mediaLink"`
+	MediaAttr      string `json:"mediaAttr"`
 	TitleSelector  string `json:"titleSelector"`
 	TextSelector   string `json:"textSelector"`
+	Source         string `json:"source"`
 }
 
 type Selector struct {

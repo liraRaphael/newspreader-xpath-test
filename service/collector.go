@@ -3,6 +3,7 @@ package collector
 import (
 	"net/url"
 	"newspreader/models"
+	"regexp"
 	"strings"
 
 	"github.com/gocolly/colly"
@@ -12,33 +13,43 @@ func GetArticleInfo(u string) models.Artigo {
 	news := map[string]models.NewsSource{
 		"www.estadao.com.br": {
 			AuthorSelector: ".hide-on-mobile .authors-names",
-			ImageLink:      ".figure-image-container img",
-			TitleSelector:  "h1 .cover-titulo",
+			MediaLink:      "#fusion-app div .news-header",
+			MediaAttr:      "style",
+			TitleSelector:  ".news-header h1.cover-titulo, .columnist-header .columnist-container .columnist-title, .content-header-entrevista .left-container-header-entrevista .left-content h1",
 			TextSelector:   ".news-body p",
+			Source:         "Estadao",
 		},
 		"www.folha.uol.com.br": {
-			AuthorSelector: ".c-signature .c-signature__author a",
-			ImageLink:      ".widget-image figure .c-image-aspect-ratio noscript img .img-responsive",
-			TitleSelector:  "h1 .c-content-head__title",
+			AuthorSelector: ".c-signature .c-signature__author a, .c-top-columnist__wrapper .c-top-columnist__content .c-top-columnist__name a",
+			MediaLink:      ".widget-image figure .c-image-aspect-ratio.c-image-aspect-ratio--3x2 img",
+			MediaAttr:      "data-src",
+			TitleSelector:  ".c-content-head .c-content-head__wrap h1.c-content-head__title",
 			TextSelector:   ".c-news__content .c-news__body p",
+			Source:         "Folha",
 		},
 		"www1.folha.uol.com.br": {
-			AuthorSelector: ".c-signature .c-signature__author a",
-			ImageLink:      ".widget-image figure .c-image-aspect-ratio noscript img .img-responsive",
-			TitleSelector:  "h1 .c-content-head__title",
+			AuthorSelector: ".c-signature .c-signature__author a, .c-top-columnist__wrapper .c-top-columnist__content .c-top-columnist__name a",
+			MediaLink:      ".widget-image figure .c-image-aspect-ratio.c-image-aspect-ratio--3x2 img",
+			MediaAttr:      "data-src",
+			TitleSelector:  ".c-content-head .c-content-head__wrap h1.c-content-head__title",
 			TextSelector:   ".c-news__content .c-news__body p",
+			Source:         "Folha",
 		},
 		"www.correiobraziliense.com.br": {
 			AuthorSelector: ".article .autor .item .name",
-			ImageLink:      ".responsive-img picture .cb-article-destaque",
+			MediaLink:      ".responsive-img picture img.cb-article-destaque",
+			MediaAttr:      "data-src",
 			TitleSelector:  ".materia-title h1",
 			TextSelector:   ".article p.texto",
+			Source:         "Correio Braziliense",
 		},
 		"www.cnnbrasil.com.br": {
 			AuthorSelector: ".author__content address .author__image .author__info .author__name .author__group span a",
-			ImageLink:      "article .post__header .img__destaque img",
+			MediaLink:      "article .post__header .img__destaque img, article .post__header .post__video .overlay-wrapper .video-button img",
+			MediaAttr:      "src",
 			TitleSelector:  "article .post__header h1.post__title",
 			TextSelector:   "article .post__content p",
+			Source:         "CNN Brasil",
 		},
 	}
 
@@ -66,13 +77,30 @@ func ScrapeContent(
 	})
 
 	// Imagem do artigo
-	c.OnHTML(bs.ImageLink, func(e *colly.HTMLElement) {
-		img_link := e.Attr("src")
+	c.OnHTML(bs.MediaLink, func(e *colly.HTMLElement) {
+		media_link := e.Attr(bs.MediaAttr)
 
-		if strings.Contains(img_link, "https://") {
-			artigo.Image = img_link
-		} else {
-			artigo.Image = scheme + host + img_link
+		if bs.Source == "Estadao" {
+			re := regexp.MustCompile(`url\("(\S+)"\)`)
+			match := re.FindStringSubmatch(media_link)
+
+			media_link = scheme + host + match[1]
+		}
+
+		is_youtube_link := strings.Contains(media_link, "youtube")
+
+		if bs.Source == "CNN Brasil" && is_youtube_link {
+			re := regexp.MustCompile(`vi/(\S+)/sddefault`)
+			match := re.FindStringSubmatch(media_link)
+
+			media_link = "https://www.youtube.com/embed/" + match[1]
+		}
+
+		artigo.Media = media_link
+		artigo.MediaType = "Image"
+
+		if is_youtube_link {
+			artigo.MediaType = "Video"
 		}
 	})
 
@@ -84,7 +112,7 @@ func ScrapeContent(
 	// Texto do artigo
 	c.OnHTML(bs.TextSelector, func(e *colly.HTMLElement) {
 		if artigo.Text != "" {
-			artigo.Text += " "
+			artigo.Text += "\n"
 		}
 
 		artigo.Text += e.Text

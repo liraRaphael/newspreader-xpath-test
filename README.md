@@ -1,12 +1,14 @@
 ## Newspreader
 
-### O Newspreader é uma API construida em GO com o intuito de trazer o conteudo de artigos de notícia de forma gratuita
+### O Newspreader é um serviço construido em GO com o intuito de trazer o conteudo de artigos de notícia de forma gratuita. O serviço entrega as informações em formato API REST e página web.
 
 ***
 
 <br/>
 
-#### Nesse momento a API retorna apenas resultados de artigos de determinados portais de notícia utilizando o endpoint **GET** ```/paynot?url=https://example.com.br```
+#### Nesse momento o serviço retorna resultados de artigos de determinados portais de notícia em formato API REST utilizando o endpoint **GET** ```/api/paynot?url=https://example.com.br```
+
+#### E também retorna uma página web com o conteúdo extraído do link acessando direto pela rota  ```/paynot?url=https://example.com.br```
 
 ### Os portais atualmente disponíveis pra consulta são:
  - Estadão
@@ -27,8 +29,9 @@
 
 #### O resultado retornado contém: 
  - Autor;
- - Imagem do artigo;
- - Titul do artigo;
+ - Mídia do artigo;
+ - Tipo da mídia do artigo (Vídeo/Imagem);
+ - Titulo do artigo;
  - Texto do artigo completo.
 
 <br/>
@@ -37,9 +40,12 @@
 
 Através do `curl` abaixo, é possivel efetivar o teste do endpoint de onde você estiver:
 ```
-curl -X GET -G 'https://newspreader.onrender.com/paynot' \
+curl -X GET -G 'https://newspreader.onrender.com/api/paynot' \
 -d url=https://www.estadao.com.br/economia/americanas-antecipar-pagamento-dividas-trabalhistas-pequenos-fornecedores/
 ```
+<br/>
+E através do link a seguir é possível visualizar a página web com o conteúdo:
+https://newspreader.onrender.com/paynot?url=https://www.estadao.com.br/economia/americanas-antecipar-pagamento-dividas-trabalhistas-pequenos-fornecedores/
 
 <br/>
 

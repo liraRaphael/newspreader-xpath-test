@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" href="/assets/artigo.css">
+</head>
+<body>
+    <div class="article-header">
+        <h1 class="article-title">{{.Title}}</h1>
+        <h3 class="article-author">{{.Author}}</h4>
+    </div>
+    <div class="article-media">
+        {{if eq .MediaType "Image"}}
+        <img src="{{.Media}}">
+        {{else}}
+        <iframe width="640" height="480" src="{{.Media}}"></iframe>
+        {{end}}
+    </div>
+    <div class="article-content">
+        <p class="article-text">
+            {{unescape .Text}}
+        </p>
+    </div>
+</body>
+</html>
