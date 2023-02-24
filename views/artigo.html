@@ -11,15 +11,22 @@
     </div>
     <div class="article-media">
         {{if eq .MediaType "Image"}}
-        <img src="{{.Media}}">
+        <div class="highlighted-image"></div>
         {{else}}
         <iframe width="640" height="480" src="{{.Media}}"></iframe>
         {{end}}
     </div>
     <div class="article-content">
         <p class="article-text">
-            {{unescape .Text}}
+            {{render .Text}}
         </p>
     </div>
+
+    <script>
+        let img_block = document.querySelector(".article-media .highlighted-image");
+        if(img_block != 'undefined'){
+            img_block.style.backgroundImage = "url('{{.Media}}')";
+        }
+    </script>
 </body>
 </html>

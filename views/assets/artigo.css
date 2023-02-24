@@ -20,6 +20,19 @@ body {
     margin: 10vh auto;
 }
 
+.article-media .highlighted-image {
+    display: inline-block;
+    padding: 1px;
+    margin: 1px;
+    min-width: 640px;
+    min-height: 480px;
+    width: 640px;
+    height: 480px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
 .article-content .article-text {
     font-size: 18px;
     line-height: 1.5;

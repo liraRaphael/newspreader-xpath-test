@@ -5,23 +5,22 @@ import (
 	"html/template"
 	"newspreader/models"
 	collector "newspreader/service"
-	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/gofiber/template/html"
+	fhtml "github.com/gofiber/template/html"
 )
 
 var embedDirStatic embed.FS
 
 func main() {
-	engine := html.New("./views", ".html")
+	engine := fhtml.New("./views", ".html")
 	engine.AddFunc(
-		// add unescape function
-		"unescape", func(s string) template.HTML {
+		"render", func(s string) template.HTML {
 			return template.HTML(s)
 		},
 	)
+
 	logger := logger.New()
 
 	app := fiber.New(fiber.Config{
@@ -45,12 +44,13 @@ func main() {
 	app.Get("/paynot", func(c *fiber.Ctx) error {
 		if c.Query("url") != "" {
 			article := collector.GetArticleInfo(c.Query("url"))
+
 			return c.Render("artigo", fiber.Map{
 				"Author":    article.Author,
 				"Media":     article.Media,
 				"MediaType": article.MediaType,
 				"Title":     article.Title,
-				"Text":      strings.Replace(article.Text, "\n", "</br></br>", -1),
+				"Text":      article.GetHtmlPreparedText(),
 			})
 		}
 
