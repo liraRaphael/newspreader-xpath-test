@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: 'Rubik', Helvetica, sans-serif;
+    color: #fff;
+    background-color: #121212;
+    margin: 0;
+}
+
+header {
+    margin: 10em 20vw 4em 20vw;
+}
+
+header h1 {
+    font-size: 35px;
+    text-align: center;
+}
+
+#search-input {
+    text-align: center;
+}
+
+#search-input form {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 3em 30vw 3em 30vw;
+}
+
+#search-input form .article_url {
+    border-radius: 5px;
+    height: 40px;
+    border: solid 1px darkslategray;
+    margin-bottom: 1em;
+    padding-left: 10px;
+}
+
+#search-input form .submit_btn {
+    color: #fff;
+    font-weight: 700;
+    background-color: darkslategray;
+    height: 45px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+footer {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 5em auto 3.5em auto;
+    font-size: 20px;
+    font-style: italic;
+    text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+    header {
+        margin: 5em 5vw;
+    }
+
+    header h1 {
+        font-size: 45px;
+        text-align: center;
+    }
+
+    #search-input form {
+        margin: 3em 5vw 3em 5vw;
+    }
+
+    #search-input form .article_url {
+        height: 55px;
+    }
+    
+    #search-input form .submit_btn {
+        height: 60px;
+    }
+
+    footer {
+        margin: 3em auto 3.5em auto;
+        font-size: 25px;
+    }
+}

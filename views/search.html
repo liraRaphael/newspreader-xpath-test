@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/assets/search.css">
+
+    <title>Newspreader - Search it and share it!</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Newspreader</h1>
+    </header>
+
+    <section id="search-input">
+        <form action="/api/render" method="POST">
+            <input type="text" class="article_url" name="article_url" placeholder="Type article URL...">
+            <input type="submit" class="submit_btn" value="Access Information!">
+        </form>
+    </section>
+
+    <footer>
+        Newspreader ©{{.Year}}
+    </footer>
+</body>
+</html>

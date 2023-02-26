@@ -5,8 +5,10 @@ import (
 	"html/template"
 	"newspreader/models"
 	collector "newspreader/service"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/favicon"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	fhtml "github.com/gofiber/template/html"
 )
@@ -28,10 +30,29 @@ func main() {
 	})
 
 	app.Use(logger)
+	app.Use(favicon.New(favicon.Config{
+		File: "./views/assets/favicon.png",
+	}))
+
 	app.Static(
 		"/assets",
 		"./views/assets",
 	)
+
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.Render("search", fiber.Map{
+			"Year": time.Now().Year(),
+		})
+	})
+
+	app.Post("/api/render", func(c *fiber.Ctx) error {
+		articleUrl := c.FormValue("article_url")
+		if articleUrl != "" {
+			return c.Redirect("/paynot?url=" + articleUrl)
+		}
+
+		return c.Status(400).JSON(models.Error{Message: "Campo 'article_url' é obrigatório para a consulta."})
+	})
 
 	app.Get("/api/paynot", func(c *fiber.Ctx) error {
 		if c.Query("url") != "" {
@@ -51,6 +72,7 @@ func main() {
 				"MediaType": article.MediaType,
 				"Title":     article.Title,
 				"Text":      article.GetHtmlPreparedText(),
+				"Year":      time.Now().Year(),
 			})
 		}
 
