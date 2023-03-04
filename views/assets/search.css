@@ -50,9 +50,12 @@ footer {
     font-size: 20px;
     font-style: italic;
     text-align: center;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
 }
 
-@media only screen and (max-width: 768px) {
+@media (max-width: 1000px) {
     header {
         margin: 5em 5vw;
     }
@@ -76,6 +79,6 @@ footer {
 
     footer {
         margin: 3em auto 3.5em auto;
-        font-size: 25px;
+        font-size: 16px;
     }
 }

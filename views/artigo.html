@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="/assets/artigo.css">
 </head>
 <body>
+    <div class="home-btn">
+        <a href="/">Voltar para a página de pesquisa &#10558;</a>
+    </div>
     <div class="article-header">
         <h1 class="article-title">{{.Title}}</h1>
         <h3 class="article-author">{{.Author}}</h4>
@@ -21,6 +24,9 @@
             {{render .Text}}
         </p>
     </div>
+
+    <button onclick="topFunction()" id="top-btn" title="Go to top">&#10149;</button>
+
     <footer>
         Newspreader ©{{.Year}}
     </footer>
@@ -29,6 +35,27 @@
         let img_block = document.querySelector(".article-media .highlighted-image");
         if(img_block != 'undefined'){
             img_block.style.backgroundImage = "url('{{.Media}}')";
+        }
+
+        let mybutton = document.getElementById("top-btn");
+
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+                mybutton.style.visibility = 1;
+            } else {
+                mybutton.style.display = "none";
+                mybutton.style.visibility = 0;
+            }
+        }
+
+        function topFunction() {
+            document.documentElement.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            })
         }
     </script>
 </body>

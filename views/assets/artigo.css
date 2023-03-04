@@ -7,6 +7,17 @@ body {
     margin: 0;
 }
 
+.home-btn {
+    text-align: center;
+    margin: 1.5em auto;
+}
+
+.home-btn a {
+    font-style: italic;
+    font-size: 15px;
+    color: #fff;
+}
+
 .article-header {
     margin: 10em 20vw 4em 20vw;
 }
@@ -48,6 +59,32 @@ body {
     line-height: 1.5;
 }
 
+#top-btn {
+    display: none; 
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: rgb(3, 77, 31);
+    color: white;
+    cursor: pointer;
+    min-width: 62px;
+    min-height: 62px;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 24px;
+    transition: linear 1s;
+    transform: rotateZ(-90deg);
+    user-select: none;
+    visibility: 0;
+  }
+  
+  #top-btn:hover {
+    background-color: rgb(9, 98, 43);
+  }
+
 footer {
     font-family: 'Times New Roman', Times, serif;
     margin: 5em auto 3.5em auto;
@@ -56,14 +93,19 @@ footer {
     text-align: center;
 }
 
-@media only screen and (max-width: 768px) {
+@media (max-width: 1000px) {
+    .home-btn {
+        margin: 100px auto;
+    }
+
     .article-header {
-        margin: 5em 5vw;
+        margin: 10em 5vw;
     }
 
     .article-header .article-title {
-        font-size: 50px;
+        font-size: 70px;
         text-align: center;
+        margin: 3em auto 1em auto;
     }
     
     .article-header .article-author {
@@ -93,8 +135,16 @@ footer {
         line-height: 1.5;
     }
 
+    #top-btn {
+        min-width: 150px;
+        min-height: 150px;
+        font-size: 50px;
+        bottom: 45px;
+        right: 45px;
+      }
+
     footer {
-        margin: 3em auto 3.5em auto;
-        font-size: 25px;
+        margin: 100px auto 100px auto;
+        font-size: 14px;
     }
 }
