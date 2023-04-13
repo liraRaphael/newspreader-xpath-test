@@ -23,16 +23,16 @@ func GetArticleInfo(u string) models.Artigo {
 			AuthorSelector: ".c-signature .c-signature__author a, .c-top-columnist__wrapper .c-top-columnist__content .c-top-columnist__name a",
 			MediaLink:      ".widget-image figure .c-image-aspect-ratio.c-image-aspect-ratio--3x2 img",
 			MediaAttr:      "data-src",
-			TitleSelector:  ".c-content-head .c-content-head__wrap h1.c-content-head__title",
-			TextSelector:   ".c-news__content .c-news__body p",
+			TitleSelector:  "//*[@id=\"c-news\"]/div[4]/div/div/div[1]/div/div/header/div/h1",
+			TextSelector:   "//*[@id=\"c-news\"]/div[5]/div/div/div/div/div[2]/div[2]/div[2]/p",
 			Source:         "Folha",
 		},
 		"www1.folha.uol.com.br": {
 			AuthorSelector: ".c-signature .c-signature__author a, .c-top-columnist__wrapper .c-top-columnist__content .c-top-columnist__name a",
 			MediaLink:      ".widget-image figure .c-image-aspect-ratio.c-image-aspect-ratio--3x2 img",
 			MediaAttr:      "data-src",
-			TitleSelector:  ".c-content-head .c-content-head__wrap h1.c-content-head__title",
-			TextSelector:   ".c-news__content .c-news__body p",
+			TitleSelector:  "//*[@id=\"c-news\"]/div[4]/div/div/div[1]/div/div/header/div/h1",
+			TextSelector:   "//*[@id=\"c-news\"]/div[5]/div/div/div/div/div[2]/div[2]/div[2]/p",
 			Source:         "Folha",
 		},
 		"www.correiobraziliense.com.br": {
@@ -105,12 +105,12 @@ func ScrapeContent(
 	})
 
 	// Título do artigo
-	c.OnHTML(bs.TitleSelector, func(e *colly.HTMLElement) {
+	c.OnXML(bs.TitleSelector, func(e *colly.XMLElement) {
 		artigo.Title = e.Text
 	})
 
 	// Texto do artigo
-	c.OnHTML(bs.TextSelector, func(e *colly.HTMLElement) {
+	c.OnXML(bs.TextSelector, func(e *colly.XMLElement) {
 		if artigo.Text != "" {
 			artigo.Text += "\n"
 		}
